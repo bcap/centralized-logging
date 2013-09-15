@@ -10,11 +10,6 @@ class elasticsearch (
 
   realize Package["java"]
 
-  user { $user :
-    system => true,
-    home   => "/opt/elasticsearch-$version",
-  }
-
   exec { "download elasticsearch $version":
     command => "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$version.tar.gz -O $downloads_dir/elasticsearch-$version.tar.gz",
     creates => "$downloads_dir/elasticsearch-$version.tar.gz",
@@ -32,6 +27,12 @@ class elasticsearch (
     command => "cp -r $downloads_dir/elasticsearch-$version /opt",
     creates => "/opt/elasticsearch-$version",
     require => Exec["extract elasticsearch $version"]
+  }
+
+  user { $user :
+    system  => true,
+    home    => "/opt/elasticsearch-$version",
+    require => Exec["install elasticsearch $version"]
   }
 
   exec { "create dirs" :
