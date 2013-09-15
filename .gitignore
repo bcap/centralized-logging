@@ -1,0 +1,8 @@
+*.gz
+*.tar
+*.tgz
+*.log
+
+.vagrant
+.sass-cache
+hosts
