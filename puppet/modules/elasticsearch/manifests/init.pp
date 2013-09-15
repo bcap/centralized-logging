@@ -11,7 +11,9 @@ class elasticsearch (
   realize Package["java"]
 
   exec { "download elasticsearch $version":
-    command => "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$version.tar.gz -O $downloads_dir/elasticsearch-$version.tar.gz",
+    command => "wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$version.tar.gz \
+                -O $downloads_dir/elasticsearch-$version.tar.gz.tmp && \
+                mv $downloads_dir/elasticsearch-$version.tar.gz.tmp $downloads_dir/elasticsearch-$version.tar.gz",
     creates => "$downloads_dir/elasticsearch-$version.tar.gz",
     require => File[$downloads_dir]
   }
